@@ -1,0 +1,14 @@
+{
+  "name": "webwerf-wh-photos",
+  "version": "1.0.0",
+  "main": "src/index.es",
+  "author": "wouter@webwerf.nl",
+  "license": "MIT",
+  "dependencies": {
+    "chocolat": "^0.4.19",
+    "hammerjs": "^2.0.8"
+  },
+  "webhare": {
+    "scopedsiteprofile": "wh/photos.siteprl"
+  }
+}

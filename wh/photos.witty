@@ -1,0 +1,14 @@
+[component index]
+  <div class="webwerf-wh-photos">
+    <div class="webwerf-wh-photos__rtd wh-rtd">
+      [rtd]
+    </div>
+    <div class="webwerf-wh-photos__items chocolat-parent">
+      [forevery photos]
+        <a class="webwerf-wh-photos__thumb-link chocolat-image" href="[image.link]" title="[title]">
+          <img class="webwerf-wh-photos__thumb-img" src="[thumb.link]" />
+        </a>
+      [/forevery]
+    </div>
+  </div>
+[/component]

@@ -1,0 +1,38 @@
+@import '~chocolat/dist/css/chocolat.css';
+
+@mixin webwerf-wh-photos() {
+  body .chocolat-overlay {
+    background-color: #000;
+    opacity: .9;
+  }
+
+  .webwerf-wh-photos {
+    &__items {
+      display: flex;
+      flex-flow: row wrap;
+      align-content: flex-start;
+    }
+
+    &__thumb-link {
+      width: 25%;
+    }
+
+    &__thumb-img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    @media screen and (max-width: 768px) {
+      &__thumb-link {
+        width: 33.33333%;
+      }
+    }
+
+    @media screen and (max-width: 568px) {
+      &__thumb-link {
+        width: 50%;
+      }
+    }
+  }
+}

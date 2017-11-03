@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<siteprofile xmlns="http://www.webhare.net/xmlns/publisher/siteprofile">
+
+  <contenttype namespace="scope:folder"></contenttype>
+
+  <foldertype typedef="scope:folder"
+              title="Fotoalbum"
+              tolliumicon="tollium:folders/photoalbum"
+              >
+  </foldertype>
+
+  <apply>
+    <to type="folder" foldertype="scope:folder" />
+    <folderindex indexfile="newfile"
+                 newfiletype="http://www.webhare.net/xmlns/publisher/richdocumentfile"
+                 newfilename="index.rtd"
+                 protectindexfile="true"
+                 />
+  </apply>
+
+  <apply priority="10">
+    <to type="all" parenttype="scope:folder" />
+    <denyfiletype typedef="*" />
+    <denyfoldertype typedef="*" />
+    <allowfiletype typedef="http://www.webhare.net/xmlns/publisher/imagefile" />
+  </apply>
+
+  <apply priority="10">
+    <to type="index" parenttype="scope:folder" />
+    <bodyrenderer library="photos.whlib" objectname="photospage" />
+  </apply>
+
+</siteprofile>

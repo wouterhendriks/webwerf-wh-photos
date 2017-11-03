@@ -1,0 +1,43 @@
+<?wh
+LOADLIB "wh::witty.whlib";
+LOADLIB "module::publisher/webdesign.whlib";
+LOADLIB "module::system/cache.whlib";
+LOADLIB "module::system/database.whlib";
+LOADLIB "module::system/whfs.whlib";
+
+PUBLIC OBJECTTYPE PhotosPage EXTEND StaticPageBase
+<
+  PUBLIC RECORD wittydata;
+
+  UPDATE PUBLIC MACRO PrepareForRendering(OBJECT webdesign)
+  {
+    INSERT "page-webwerf-wh-photos" INTO webdesign->htmlclasses AT END;
+
+    RECORD ARRAY photos :=
+         SELECT id
+              , title
+              , image := DEFAULT RECORD
+              , thumb := DEFAULT RECORD
+           FROM system.fs_objects
+          WHERE parent = webdesign->targetfolder->id
+                AND type = 12 // image
+                AND indexurl != ""
+       ORDER BY ordering, ToUpperCase(title), id;
+
+    FOREVERY (RECORD photo FROM photos)
+    {
+      RECORD wrapped := OpenWHFSObject(photo.id)->GetWrapped();
+      photos[#photo].image := WrapCachedImage(wrapped, [ method := "fit", setwidth := 1920, format := "image/jpeg" ]); // never bigger than 1920 wide
+      photos[#photo].thumb := WrapCachedImage(wrapped, [ method := "fill", setwidth := 500, setheight := 500, format := "image/jpeg" ]);
+    }
+
+    this->wittydata := [ photos := photos
+                       , rtd := PTR webdesign->OpenRTDFromFile(webdesign->targetobject)->RenderAllObjects()
+                       ];
+  }
+
+  UPDATE PUBLIC MACRO RunBody(OBJECT webdesign)
+  {
+    LoadWittyLibrary(Resolve("photos.witty"), "HTML-NI")->RunComponent("index", this->wittydata);
+  }
+>;
